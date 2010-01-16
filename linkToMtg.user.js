@@ -60,15 +60,20 @@
         '/descendant::*[local-name() = "a" or local-name() = "A"][starts-with(@href, "http://gatherer.wizards.com")]';
 
       var as = $X(gathererLinkXpath, doc);
-      var gathererLinkUrl = as[0].href;
+      var gathererLinkUrl = "";
+      if (as && as[0] && as.length >= 0 && as[0].href) {
+        gathererLinkUrl = as[0].href;
+      }
 
-      var newA = document.createElement('a');
-      newA.href = gathererLinkUrl;
-      newA.appendChild(document.createTextNode("gatherer"));
+      if (gathererLinkUrl && gathererLinkUrl !== "") {
+        var newA = document.createElement('a');
+        newA.href = gathererLinkUrl;
+        newA.appendChild(document.createTextNode("gatherer"));
 
-      var content = document.getElementById('bodyContent');
-      if (content) {
-        content.parentNode.insertBefore(newA, content);
+        var content = document.getElementById('bodyContent');
+        if (content) {
+          content.parentNode.insertBefore(newA, content);
+        }
       }
     }
   });
