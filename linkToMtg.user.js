@@ -37,8 +37,19 @@
     return doc;
   }
 
-  var xpath = '/html/body/div/div/div/div/div[3]/b/a';
-  var wisdomGuildUrl = $X(xpath)[0].href;
+  var wisdomXpath = '/html/body/div/div/div/div/div[3]/b/a';
+
+  wisdomGuilAs = $X(wisdomXpath);
+  var wisdomGuildUrl = "";
+  if (wisdomGuilAs && wisdomGuilAs[0] && wisdomGuilAs.length >= 0 && wisdomGuilAs[0].href) {
+    if (wisdomGuilAs[0].href.indexOf("http://whisper.wisdom-guild.net/") === 0) {
+      wisdomGuildUrl = wisdomGuilAs[0].href;
+    }
+  }
+
+  if (! wisdomGuildUrl || wisdomGuildUrl === "") {
+    return;
+  }
 
   GM_xmlhttpRequest({
     method: 'GET',
