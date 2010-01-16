@@ -12,6 +12,21 @@
 // http://www.opensource.org/licenses/mit-license.php
 
 (function() {
-  console.log("linkToMtg");
+
+  // http://gist.github.com/29681
+  function $X (exp, context, resolver, result_type) {
+    context || (context = document);
+    var Doc = context.ownerDocument || context;
+    var result = Doc.evaluate(exp, context, resolver, result_type || XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+    if (result_type) return result;
+      for (var i = 0, len = result.snapshotLength, res = new Array(len); i < len; i++) {
+        res[i] = result.snapshotItem(i);
+      }
+      return res;
+  }
+
+  var xpath = '/html/body/div/div/div/div/div[3]/b/a';
+  var anchor = $X(xpath)[0];
+  console.log(anchor.href);
 })();
 
