@@ -45,7 +45,13 @@
     url: wisdomGuildUrl,
     onload: function(res) {
       var doc =  createHTMLDocument(res.responseText);
-      console.log(doc);
+      var gathererLinkXpath =
+        '/descendant::*[local-name() = "a" or local-name() = "A"][starts-with(@href, "http://gatherer.wizards.com")]';
+
+      var as = $X(gathererLinkXpath, doc);
+
+      console.log("as length = " + as.length.toString());
+      console.log(as[0].href);
     }
   });
 })();
