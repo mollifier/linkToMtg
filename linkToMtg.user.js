@@ -26,7 +26,14 @@
   }
 
   var xpath = '/html/body/div/div/div/div/div[3]/b/a';
-  var anchor = $X(xpath)[0];
-  console.log(anchor.href);
+  var wisdomGuildUrl = $X(xpath)[0].href;
+
+  GM_xmlhttpRequest({
+    method: 'GET',
+    url: wisdomGuildUrl,
+    onload: function(res) {
+      console.log(res.responseText);
+    }
+  });
 })();
 
