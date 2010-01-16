@@ -49,9 +49,16 @@
         '/descendant::*[local-name() = "a" or local-name() = "A"][starts-with(@href, "http://gatherer.wizards.com")]';
 
       var as = $X(gathererLinkXpath, doc);
+      var gathererLinkUrl = as[0].href;
 
-      console.log("as length = " + as.length.toString());
-      console.log(as[0].href);
+      var newA = document.createElement('a');
+      newA.href = gathererLinkUrl;
+      newA.appendChild(document.createTextNode("gatherer"));
+
+      var content = document.getElementById('bodyContent');
+      if (content) {
+        content.parentNode.insertBefore(newA, content);
+      }
     }
   });
 })();
