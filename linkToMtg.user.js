@@ -25,6 +25,18 @@
       return res;
   }
 
+  function createHTMLDocument(source) {
+    var XHTML_NS = 'http://www.w3.org/1999/xhtml';
+    var doctype = document.implementation.createDocumentType('html',
+      '-//W3C//DTD HTML 4.01//EN', 'http://www.w3.org/TR/html4/strict.dtd');
+    var doc = document.implementation.createDocument(XHTML_NS, 'html', doctype);
+    var range = document.createRange();
+    range.selectNodeContents(document.documentElement);
+    var content = doc.adoptNode(range.createContextualFragment(source));
+    doc.documentElement.appendChild(content);
+    return doc;
+  }
+
   var xpath = '/html/body/div/div/div/div/div[3]/b/a';
   var wisdomGuildUrl = $X(xpath)[0].href;
 
@@ -32,7 +44,8 @@
     method: 'GET',
     url: wisdomGuildUrl,
     onload: function(res) {
-      console.log(res.responseText);
+      var doc =  createHTMLDocument(res.responseText);
+      console.log(doc);
     }
   });
 })();
